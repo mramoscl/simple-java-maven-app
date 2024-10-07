@@ -6,6 +6,13 @@ pipeline {
         }
     }
     stages {
+        stage('Checkout') {
+            steps {
+                // Realiza el checkout del código del repositorio
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']],
+                userRemoteConfigs: [[url: 'https://github.com/jenkins-docs/simple-java-maven-app.git']]])
+            }
+        }
         stage('Build') {
             steps {
                 sh 'mvn -B -DskipTests clean package'
